@@ -41,5 +41,18 @@ private SessionFactory sessionFactory;
 		
 		return (User)query.uniqueResult();
 	}
+
+	public void update(User validUser) {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		session.update(validUser);
+	}
+
+	public User getUser(String email) {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		User user=(User)session.get(User.class, email);
+		return user;
+	}
 	
 }
