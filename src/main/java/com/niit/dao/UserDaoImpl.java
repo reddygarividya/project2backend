@@ -54,5 +54,11 @@ private SessionFactory sessionFactory;
 		User user=(User)session.get(User.class, email);
 		return user;
 	}
+
+	public void updateUser(User user) {
+		// TODO Auto-generated method stub
+        Session session=sessionFactory.getCurrentSession();
+        session.update(user);
+	}
 	
 }
