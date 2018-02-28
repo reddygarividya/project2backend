@@ -24,7 +24,7 @@ private SessionFactory sessionFactory;
 	public List<Job> getAllJobs() {
 		// TODO Auto-generated method stub
 		Session session=sessionFactory.getCurrentSession();
-		Query query=session.createQuery("from job");
+		Query query=session.createQuery("from Job");
 		return query.list();
 	}
 	public Job getJob(int id) {
