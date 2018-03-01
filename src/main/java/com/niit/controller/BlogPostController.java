@@ -36,7 +36,7 @@ public class BlogPostController {
 		String email=(String)session.getAttribute("loginId");
 		if(email==null)
 		{
-			ErrorClass error=new ErrorClass(5,"Unautorized access");
+			ErrorClass error=new ErrorClass(5,"Unauthorized access");
 			return new ResponseEntity<ErrorClass>(error,HttpStatus.UNAUTHORIZED);
 		}
 		blogPost.setPostedOn(new Date());
@@ -58,7 +58,7 @@ public class BlogPostController {
 		String email=(String)session.getAttribute("loginId");
 		if(email==null)
 		{
-			ErrorClass error=new ErrorClass(5,"Unautorized access");
+			ErrorClass error=new ErrorClass(5,"Unauthorized access");
 			return new ResponseEntity<ErrorClass>(error,HttpStatus.UNAUTHORIZED);
 		}
 		if(approved==0) {
@@ -72,4 +72,14 @@ public class BlogPostController {
 	List<BlogPost> blogs=blogPostDao.listOfBlogs(approved);
 	return new ResponseEntity<List<BlogPost>>(blogs,HttpStatus.OK);
 }
+	@RequestMapping(value="/getblog/{id}",method=RequestMethod.GET)
+	public ResponseEntity<?> getBlog(@PathVariable int id,HttpSession session) {
+		String email=(String)session.getAttribute("loginId");
+		if(email==null) {
+			ErrorClass error=new ErrorClass(5,"Unauthorized access");
+			return new ResponseEntity<ErrorClass>(error,HttpStatus.UNAUTHORIZED);
+		}
+		BlogPost blogPost=blogPostDao.getBlog(id);
+		return new ResponseEntity<BlogPost>(blogPost,HttpStatus.OK);
+	}
 }
