@@ -8,5 +8,7 @@ public interface BlogPostDao {
 	void addBlogPost(BlogPost blogPost);
 	List<BlogPost> listOfBlogs(int approved);
 	BlogPost getBlog(int id);
+	void approve(BlogPost blog);
+	void reject(BlogPost blog,String rejectionReason);
 
 }
