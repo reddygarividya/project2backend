@@ -61,17 +61,20 @@ public class BlogPostController {
 			ErrorClass error=new ErrorClass(5,"Unauthorized access");
 			return new ResponseEntity<ErrorClass>(error,HttpStatus.UNAUTHORIZED);
 		}
-		if(approved==0) {
+		if(approved==0) 
+		{
 			User user=userDao.getUser(email);
-			if(!user.getRole().equals("ADMIN")) {
+			if(!user.getRole().equals("ADMIN")) 
+			{
 				ErrorClass error=new ErrorClass(7,"Access Denied");
 				return new ResponseEntity<ErrorClass>(error,HttpStatus.UNAUTHORIZED);
 				
 			}
-}
+          }
 	List<BlogPost> blogs=blogPostDao.listOfBlogs(approved);
 	return new ResponseEntity<List<BlogPost>>(blogs,HttpStatus.OK);
 }
+
 	@RequestMapping(value="/getblog/{id}",method=RequestMethod.GET)
 	public ResponseEntity<?> getBlog(@PathVariable int id,HttpSession session) {
 		String email=(String)session.getAttribute("loginId");
