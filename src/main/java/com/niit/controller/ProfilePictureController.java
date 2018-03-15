@@ -20,11 +20,15 @@ import com.niit.model.ProfilePicture;
 
 @Controller
 public class ProfilePictureController {
+	
+	public ProfilePictureController(){
+		System.out.println("profile picture instantiation");
+	}
 @Autowired
 private ProfilePictureDao profilePictureDao;
 	@RequestMapping(value="/uploadprofilepic",method=RequestMethod.POST)
 	//directly from html file.
-	public ResponseEntity<?> uploadProfilePicture(@RequestParam CommonsMultipartFile image,HttpSession session){
+	public ResponseEntity<?> uploadProfilePic(@RequestParam CommonsMultipartFile image,HttpSession session){
 		String email=(String)session.getAttribute("loginId");
 		if(email==null){
 			ErrorClass error=new ErrorClass(4,"Unauthrozied access.. Please login");
@@ -33,7 +37,9 @@ private ProfilePictureDao profilePictureDao;
 		ProfilePicture profilePicture=new ProfilePicture();
 		profilePicture.setEmail(email);
 		profilePicture.setImage(image.getBytes());
+		System.out.println("hello");
 		profilePictureDao.uploadProfilePicture(profilePicture);//insert or update 
+		System.out.println("aunty");
 		return new ResponseEntity<ProfilePicture>(profilePicture,HttpStatus.OK);
 	}
 	//<img src="http://localhost:..../middleware/getimage/nameoftheuser" alt="image not found">
@@ -48,6 +54,7 @@ private ProfilePictureDao profilePictureDao;
 		System.out.println(email);
 		ProfilePicture profilePicture=profilePictureDao.getProfilePic(email);
 		
+		System.out.println("sare po");
 		if(profilePicture==null)
 			return null;
 		System.out.println("Image is "  + profilePicture.getImage() + " " + email);
