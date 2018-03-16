@@ -4,12 +4,14 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.niit.model.Friend;
 import com.niit.model.User;
 
 @Repository
@@ -28,4 +30,20 @@ public class FriendDaoImpl implements FriendDao {
 		List<User> suggestedUsers=query.list();
 		return suggestedUsers;
 	}
+	public void addFriend(Friend friend) {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		session.save(friend);
+	}
+	
+	public List<Friend> pendingRequests(String toIdEmail) {
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Friend where status=? and toId.email=?");
+		query.setCharacter(0, 'P');
+		query.setString(1, toIdEmail);
+		List<Friend> pendingRequests=query.list();
+		return pendingRequests;
+	}
+	
+
 }
