@@ -71,4 +71,33 @@ public class FriendController {
 
 		return new ResponseEntity<List<Friend>>(pendingRequests,HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/acceptrequest",method=RequestMethod.PUT)
+	public ResponseEntity<?> acceptRequest(@RequestBody Friend request,HttpSession session){
+		String email=(String)session.getAttribute("loginId");
+
+		if(email==null) {
+
+			ErrorClass error=new ErrorClass(5,"Unauthorized access");
+
+			return new ResponseEntity<ErrorClass>(error,HttpStatus.UNAUTHORIZED);
+	}
+		friendDao.acceptRequest(request);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+}
+	
+	@RequestMapping(value="/deleterequest",method=RequestMethod.PUT)
+	public ResponseEntity<?> deleteRequest(@RequestBody Friend request,HttpSession session){
+		String email=(String)session.getAttribute("loginId");
+
+		if(email==null) {
+
+			ErrorClass error=new ErrorClass(5,"Unauthorized access");
+
+			return new ResponseEntity<ErrorClass>(error,HttpStatus.UNAUTHORIZED);
+	}
+		friendDao.deleteRequest(request);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+}
+	
 }
