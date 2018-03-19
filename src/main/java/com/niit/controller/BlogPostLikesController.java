@@ -40,6 +40,5 @@ public class BlogPostLikesController {
 	}
 	BlogPost blogPost=blogPostLikesDao.updateLikes(id, email);
 	return new ResponseEntity<BlogPost>(blogPost,HttpStatus.OK);
-
 }
 }
